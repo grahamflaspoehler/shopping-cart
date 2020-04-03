@@ -8,7 +8,7 @@ export default new Vuex.Store({
   // State is equivalent to data on a Vue instance
   state: {
     products: [],
-    cart: [],
+    cart: []
   },
 
   // Getters are equivalent to computed properties on a Vue instance
@@ -16,16 +16,16 @@ export default new Vuex.Store({
   // Getters are available on the store.getters object
   getters: {
     availableProducts(state) {
-      return state.products.filter((product) => product.inventory > 0);
+      return state.products.filter(product => product.inventory > 0);
     },
   },
 
   // Actions are equivalent to methods on a Vue instance
   actions: {
     fetchProducts(context) {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         //FETCH PRODUCTS FROM API
-        shop.getProducts((products) => {
+        shop.getProducts(products => {
           context.commit("setProducts", products);
           resolve();
         });
@@ -58,7 +58,7 @@ export default new Vuex.Store({
     pushProductToCart(state, product) {
       state.cart.push({
         id: product.id,
-        quantity: 1,
+        quantity: 1
       });
     },
 
