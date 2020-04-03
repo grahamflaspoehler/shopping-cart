@@ -10,20 +10,17 @@
 </template>
 
 <script>
-import shop from "@/api/shop.js";
 import store from "@/store/index.js";
 export default {
   computed: {
     products() {
-      return store.state.products;
+      return store.getters.availableProducts;
     }
   },
 
   // Everything in this hook is run as soon as the instance is created
   created() {
-    shop.getProducts(products => {
-      store.commit("setProducts", products);
-    });
+    store.dispatch("fetchProducts");
   }
 };
 </script>

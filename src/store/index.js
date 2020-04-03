@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import shop from "@/api/shop.js";
 
 Vue.use(Vuex);
 
@@ -10,17 +11,19 @@ export default new Vuex.Store({
   },
 
   // Getters are equivalent to computed properties on a Vue instance
+  // Use Getters when filtering or calculating a property on runtime
+  // Getters are available on the store.getters object
   getters: {
-    productsCount() {
-      //IMPLEMENT
+    availableProducts(state) {
+      return state.products.filter(product => product.inventory > 0);
     }
   },
 
   // Actions are equivalent to methods on a Vue instance
   actions: {
-    getProducts() {
+    fetchProducts(context) {
       //FETCH PRODUCTS FROM API
-      //RUN setProducts() MUTATION
+      shop.getProducts(products => context.commit("setProducts", products));
     }
   },
 
