@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import store from "@/store/index.js";
 export default {
   data() {
     return {
@@ -24,14 +23,14 @@ export default {
 
   computed: {
     products() {
-      return store.getters.availableProducts;
+      return this.$store.getters.availableProducts;
     }
   },
 
   // Everything in this hook is run as soon as the instance is created
   created() {
     this.loading = true;
-    store.dispatch("fetchProducts").then(() => (this.loading = false));
+    this.$store.dispatch("fetchProducts").then(() => (this.loading = false));
   }
 };
 </script>
