@@ -22,8 +22,13 @@ export default new Vuex.Store({
   // Actions are equivalent to methods on a Vue instance
   actions: {
     fetchProducts(context) {
-      //FETCH PRODUCTS FROM API
-      shop.getProducts(products => context.commit("setProducts", products));
+      return new Promise(resolve => {
+        //FETCH PRODUCTS FROM API
+        shop.getProducts(products => {
+          context.commit("setProducts", products);
+          resolve();
+        });
+      });
     }
   },
 

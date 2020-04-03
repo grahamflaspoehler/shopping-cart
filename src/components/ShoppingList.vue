@@ -1,6 +1,10 @@
 <template>
   <div>
     <h1>Product List</h1>
+    <img
+      v-if="loading"
+      src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/1f430a36197347.57135ca19bbf5.gif"
+    />
     <ul>
       <li v-for="product in products" :key="product.id">
         {{ product.title }} - {{ product.price }}
@@ -12,6 +16,12 @@
 <script>
 import store from "@/store/index.js";
 export default {
+  data() {
+    return {
+      loading: false
+    };
+  },
+
   computed: {
     products() {
       return store.getters.availableProducts;
@@ -20,7 +30,8 @@ export default {
 
   // Everything in this hook is run as soon as the instance is created
   created() {
-    store.dispatch("fetchProducts");
+    this.loading = true;
+    store.dispatch("fetchProducts").then(() => (this.loading = false));
   }
 };
 </script>
