@@ -9,13 +9,13 @@
     <div>
       <p>total: {{ cartTotal | currency }}</p>
     </div>
-    <button @click="$store.dispatch('checkout')">Check out</button>
+    <button @click="checkout">Check out</button>
     <p>{{ checkoutStatus }}</p>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapState({
@@ -32,6 +32,12 @@ export default {
     // cartTotal() {
     //   return this.$store.getters.cartTotal;
     // }
+  },
+
+  methods: {
+    ...mapActions({
+      checkout: "checkout"
+    })
   }
 };
 </script>
