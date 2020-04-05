@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -35,13 +36,13 @@ export default {
   },
 
   computed: {
-    products() {
-      return this.$store.state.products;
-    },
+    ...mapState({
+      products: state => state.products
+    }),
 
-    productIsInStock() {
-      return this.$store.getters.productIsInStock;
-    }
+    ...mapGetters({
+      productIsInStock: "productIsInStock"
+    })
   },
 
   // Everything in this hook is run as soon as the instance is created
