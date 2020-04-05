@@ -9,6 +9,8 @@
     <div>
       <p>total: {{ cartTotal | currency }}</p>
     </div>
+    <button @click="$store.dispatch('checkout')">Check out</button>
+    <p>{{ $store.state.checkoutStatus }}</p>
   </div>
 </template>
 
@@ -22,5 +24,5 @@ export default {
       return this.$store.getters.cartTotal;
     }
   }
-}
+};
 </script>

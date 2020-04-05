@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import Vue from "vue";
 import Vuex from "vuex";
 import shop from "@/api/shop.js";
@@ -8,7 +9,8 @@ export default new Vuex.Store({
   // State is equivalent to data on a Vue instance
   state: {
     products: [],
-    cart: []
+    cart: [],
+    checkoutStatus: null
   },
 
   // Getters are equivalent to computed properties on a Vue instance
@@ -64,6 +66,26 @@ export default new Vuex.Store({
         context.commit("decrementProductInventory", product);
       }
     },
+
+    checkout({ state, commit }) {
+      if (!state.cart.length) {
+        alert("Please add products to your cart");
+        return;
+      }
+
+      shop.buyProducts(
+        state.products,
+
+        () => {
+          commit("emptyCart");
+          commit("setCheckoutStatus", "success");
+        },
+
+        () => {
+          commit("setCheckoutStatus", "failure");
+        }
+      );
+    }
   },
 
   // Mutations are responsible for single state changes
@@ -88,6 +110,14 @@ export default new Vuex.Store({
     decrementProductInventory(state, product) {
       product.inventory--;
     },
+
+    emptyCart(state) {
+      state.cart = [];
+    },
+
+    setCheckoutStatus(state, status) {
+      state.checkoutStatus = status;
+    }
   },
 
   modules: {},
