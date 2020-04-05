@@ -10,19 +10,28 @@
       <p>total: {{ cartTotal | currency }}</p>
     </div>
     <button @click="$store.dispatch('checkout')">Check out</button>
-    <p>{{ $store.state.checkoutStatus }}</p>
+    <p>{{ checkoutStatus }}</p>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
 export default {
   computed: {
-    products() {
-      return this.$store.getters.cartProducts;
-    },
-    cartTotal() {
-      return this.$store.getters.cartTotal;
-    }
+    ...mapState({
+      checkoutStatus: "checkoutStatus"
+    }),
+
+    ...mapGetters({
+      products: "cartProducts",
+      cartTotal: "cartTotal"
+    })
+    // products() {
+    //   return this.$store.getters.cartProducts;
+    // },
+    // cartTotal() {
+    //   return this.$store.getters.cartTotal;
+    // }
   }
 };
 </script>
